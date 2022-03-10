@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MainComponent} from './components/main/main.component';
 import {DecisionTreeRoutingModule} from "./decision-tree-routing.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {DecisionTreeRoutingModule} from "./decision-tree-routing.module";
   ],
   imports: [
     DecisionTreeRoutingModule,
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class DecisionTreeModule {

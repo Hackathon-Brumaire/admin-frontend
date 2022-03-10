@@ -1,1 +1,32 @@
-<p>main works!</p>
+<main data-scroll-container class="mx-auto px-2">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Ajouter un arbre de décision
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="treeForm">
+        <div *ngFor="let question of treeForm.value['QUESTIONS']">
+          <mat-form-field>
+            <mat-label>Question {{question.id}}</mat-label>
+            <input matInput
+                   type="text"
+                   [value]="question.title"
+                   (keyup)="onQuestionAdd(question.id, $event)"/>
+          </mat-form-field>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{question.title}}
+              </mat-panel-title>
+              <mat-panel-description>
+
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
