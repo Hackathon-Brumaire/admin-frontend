@@ -1,20 +1,19 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
-type Question = {
+export type QuestionForm = {
   id: number,
   title: string,
-  previousAnswerId: number,
-  nextAnswers: Answer[],
+  previousAnswerId?: number,
+  nextAnswers: AnswerForm[],
 }
-type Answer = {
+export type AnswerForm = {
   id: number,
   title: string,
   previousQuestionId: number,
-  nextQuestion?: Question,
-  doc?: Doc
+  doc?: DocForm
 }
-type Doc = {
+export type DocForm = {
   label: string,
   description: string,
   type: string,
@@ -38,14 +37,13 @@ export class MainComponent implements OnInit {
       ANSWERS: [[]],
     });
     this.answerForm = fb.group({
-      ANSWER_PREVIOUS_QUESTION_ID: [0],
-      ANSWER_LABEL: [''],
+      ANSWER_TITLE: [''],
+      ANSWER_DOC_LABEL: [''],
       ANSWER_DOC_TYPE: [''],
       ANSWER_DOC_DESCRIPTION: [''],
       ANSWER_DOC_LINK: ['']
     });
     this.questionForm = fb.group({
-      PREVIOUS_ANSWER_ID: [0],
       QUESTION_TITLE: [''],
     })
   }
@@ -53,8 +51,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onQuestionAdd(questionId: number): void {
-    const questions: any[] = this.treeForm.value['QUESTIONS'];
+  onQuestionSubmit(questionId: number): void {
+    const questions: QuestionForm[] = this.treeForm.value['QUESTIONS'];
     const index = questions.findIndex((q: any) => {
       return q.id === questionId
     });
@@ -65,29 +63,35 @@ export class MainComponent implements OnInit {
     this.treeForm.controls['QUESTIONS'].setValue(
       [...questions]
     );
+    this.questionForm.reset();
   }
 
   onAnswerAdd(questionId: number): void {
-    const answer: any[] = this.treeForm.value['ANSWERS'];
-
+    const answerForms: AnswerForm[] = this.treeForm.value['ANSWERS'];
+    const nextAnswer: AnswerForm = {
+      id: answerForms.length + 1,
+      title: this.answerForm.value['ANSWER_TITLE'],
+      previousQuestionId: questionId,
+    }
+    if (this.answerForm.value['ANSWER_DOC_LABEL'] == null ||
+      this.answerForm.value['ANSWER_DOC_LABEL'].length > 0) {
+      nextAnswer.doc = {
+        label: this.answerForm.value['ANSWER_DOC_LABEL'],
+        description: this.answerForm.value['ANSWER_DOC_DESCRIPTION'],
+        type: this.answerForm.value['ANSWER_DOC_TYPE'],
+        link: this.answerForm.value['ANSWER_DOC_LINK']
+      }
+    }
     this.treeForm.controls['ANSWERS'].setValue(
-      [...answer,
-        {
-          id: answer.length + 1,
-          title: this.answerForm.value['ANSWER_LABEL'],
-          previousQuestionId: questionId,
-        }
+      [...answerForms,
+        nextAnswer
       ]
     );
-    console.log(this.treeForm.value['ANSWERS']);
-  }
-
-  getSubmitedAnswer(questionId: number): any[] {
-    return this.treeForm.value['ANSWERS'].filter((a: any) => a.previousQuestionId === questionId);
+    this.answerForm.reset();
   }
 
   onQuestionAddFromAnswer(answerId: number): void {
-    const questions = this.treeForm.value['QUESTIONS'];
+    const questions: QuestionForm[] = this.treeForm.value['QUESTIONS'];
     this.treeForm.controls['QUESTIONS'].setValue(
       [
         ...questions,
@@ -102,5 +106,12 @@ export class MainComponent implements OnInit {
 
   }
 
+  getSubmittedAnswer(questionId: number): any[] {
+    return this.treeForm.value['ANSWERS'].filter((a: any) => a.previousQuestionId === questionId);
+  }
 
+  getAnswer(answerId: number): AnswerForm | undefined {
+    const answers: AnswerForm[] = this.treeForm.value['ANSWERS'];
+    return answers.find((answer: AnswerForm) => answer.id === answerId);
+  }
 }
