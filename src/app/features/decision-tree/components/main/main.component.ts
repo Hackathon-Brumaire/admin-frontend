@@ -1,24 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {AnswerForm, QuestionForm} from "../../../../types/formTypes";
+import {DecisionTreeService} from "../../../../services/decision-tree.service";
+import {formToJsonBody} from "../../../../utils/form-adapter";
 
-export type QuestionForm = {
-  id: number,
-  title: string,
-  previousAnswerId?: number,
-  nextAnswers: AnswerForm[],
-}
-export type AnswerForm = {
-  id: number,
-  title: string,
-  previousQuestionId: number,
-  doc?: DocForm
-}
-export type DocForm = {
-  label: string,
-  description: string,
-  type: string,
-  link: string
-}
 
 @Component({
   selector: 'app-main',
@@ -31,7 +16,8 @@ export class MainComponent implements OnInit {
   answerForm: FormGroup;
   questionForm: FormGroup;
 
-  constructor(@Inject(FormBuilder) fb: FormBuilder) {
+  constructor(@Inject(FormBuilder) fb: FormBuilder,
+              private decisionTreeService: DecisionTreeService) {
     this.treeForm = fb.group({
       QUESTIONS: [[{id: 1, title: ''}]],
       ANSWERS: [[]],
@@ -113,5 +99,18 @@ export class MainComponent implements OnInit {
   getAnswer(answerId: number): AnswerForm | undefined {
     const answers: AnswerForm[] = this.treeForm.value['ANSWERS'];
     return answers.find((answer: AnswerForm) => answer.id === answerId);
+  }
+
+  onSubmit(): void {
+    console.log(formToJsonBody(
+      this.treeForm.value['QUESTIONS'],
+      this.treeForm.value['ANSWERS']
+    ))
+    this.decisionTreeService.postDecisionTree(
+      formToJsonBody(
+        this.treeForm.value['QUESTIONS'],
+        this.treeForm.value['ANSWERS']
+      )
+    )
   }
 }
