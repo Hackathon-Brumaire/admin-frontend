@@ -1,0 +1,13 @@
+.idea
+.vscode
+.git
+.gitignore
+dist
+node_modules
+Procfile
+README.md
+.editorconfig
+e2e
+docs
+*.zip
+*.md
