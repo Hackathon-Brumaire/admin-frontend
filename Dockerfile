@@ -10,6 +10,6 @@ RUN npm run build
 FROM nginx:latest
 WORKDIR /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /usr/app/dist/PokeFight ./
+COPY --from=builder /usr/app/dist/admin-frontend ./
 
 EXPOSE 80
