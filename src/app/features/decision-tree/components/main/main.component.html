@@ -6,27 +6,94 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="treeForm">
-        <div *ngFor="let question of treeForm.value['QUESTIONS']">
+      <div *ngFor="let question of treeForm.value['QUESTIONS']" style="margin-top: 20px">
+        <form [formGroup]="questionForm">
           <mat-form-field>
             <mat-label>Question {{question.id}}</mat-label>
             <input matInput
                    type="text"
-                   [value]="question.title"
-                   (keyup)="onQuestionAdd(question.id, $event)"/>
+                   formControlName="QUESTION_TITLE"
+                   (change)="onQuestionSubmit(question.id)"/>
           </mat-form-field>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{question.title}}
-              </mat-panel-title>
-              <mat-panel-description>
-
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
+        </form>
+        <div *ngIf="question.previousAnswerId !== undefined" style="margin-top: 20px; margin-bottom: 20px">
+          Depuis la réponse '{{getAnswer(question.previousAnswerId)?.title}}' venant de la question
+          N°{{getAnswer(question.previousAnswerId)?.previousQuestionId}}
         </div>
-      </form>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{question.title}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <form [formGroup]="answerForm">
+            <mat-form-field style="width: 100%;">
+              <mat-label>Intitulé réponse</mat-label>
+              <input matInput
+                     formControlName="ANSWER_TITLE"
+                     type="text"
+              />
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 100%;">
+              <mat-label>Nom du lien associé (optionnel)</mat-label>
+              <input matInput
+                     formControlName="ANSWER_DOC_LABEL"
+                     type="text"
+              />
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 100%;">
+              <mat-label>Description du lien (optionnel)</mat-label>
+              <input matInput
+                     formControlName="ANSWER_DOC_DESCRIPTION"
+                     type="text"
+              />
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 100%;">
+              <mat-label>Type de lien</mat-label>
+              <mat-select formControlName="ANSWER_DOC_TYPE">
+                <mat-option value="">Aucun</mat-option>
+                <mat-option value="video">Vidéo</mat-option>
+                <mat-option value="image">Image</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width: 100%;">
+              <mat-label>Lien (optionnel)</mat-label>
+              <input matInput
+                     formControlName="ANSWER_DOC_LINK"
+                     type="text"
+              />
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="onAnswerAdd(question.id)">Ajouter</button>
+          </form>
+          <div *ngFor="let submittedAnswer of getSubmittedAnswer(question.id)" style="margin-top:20px">
+            <div>
+              Intitulé : {{submittedAnswer.title}}
+            </div>
+            <br>
+            <div *ngIf="submittedAnswer.doc !== undefined">
+              <div>Lien associé (optionnel) : {{submittedAnswer.doc.label}}</div>
+              <br>
+              <div>Description du lien (optionnel) : {{submittedAnswer.doc.description}}</div>
+              <br>
+              <div>Type de lien : {{submittedAnswer.doc.type}}</div>
+              <br>
+              <div>Lien : {{submittedAnswer.doc.link}}</div>
+            </div>
+            <button mat-raised-button color="primary" type="button"
+                    (click)="onQuestionAddFromAnswer(submittedAnswer.id)">
+              Ajouter une question
+            </button>
+            <br><br>
+          </div>
+        </mat-expansion-panel>
+      </div>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="button" (click)="onSubmit()">Soumettre</button>
+    </mat-card-actions>
   </mat-card>
 </main>
