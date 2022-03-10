@@ -1,0 +1,16 @@
+main {
+  background-image: linear-gradient(to bottom, #00108b 0%, #010a70 100%);
+  min-height: 100vh;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.message {
+  background-image: linear-gradient(to bottom, #15bdb7 0%, #017067 100%);
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}

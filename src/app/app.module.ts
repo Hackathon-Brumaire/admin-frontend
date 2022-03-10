@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from "./shared/shared.module";
 import {FormBuilder} from "@angular/forms";
+import {ConversationModule} from "./features/conversation/conversation.module";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
@@ -17,7 +18,8 @@ import {HttpClientModule} from "@angular/common/http";
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    ConversationModule,
   ],
   providers: [FormBuilder],
   bootstrap: [AppComponent]

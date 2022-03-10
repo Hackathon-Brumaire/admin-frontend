@@ -1,0 +1,22 @@
+<main class="mx-auto px-2">
+  <div>
+    <span>
+      <mat-form-field>
+        <mat-label>Username :</mat-label>
+        <input matInput
+               type="text"/>
+      </mat-form-field>
+      <button>Chercher</button>
+    </span>
+    <div *ngFor="let message of conversation" class="message">
+      <div *ngIf="message.type === 'answer'" class="user-message">
+        <p>{{"username"}}</p>
+        <p>{{message.message}}</p>
+      </div>
+      <div *ngIf="message.type === 'question'" class="professional-message">
+        <p>Professionel</p>
+        <p>{{message.message}}</p>
+      </div>
+    </div>
+  </div>
+</main>

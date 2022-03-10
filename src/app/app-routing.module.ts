@@ -7,6 +7,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/decision-tree/decision-tree.module')
         .then((m) => m.DecisionTreeModule)
+  },
+  {
+    path: 'conversation',
+    loadChildren: () =>
+      import('./features/conversation/conversation.module')
+        .then((m) => m.ConversationModule)
   }
 ];
 
