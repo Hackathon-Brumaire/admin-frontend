@@ -2,13 +2,15 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 type Question = {
-  id: number;
-  title: String,
+  id: number,
+  title: string,
+  previousAnswerId: number,
   nextAnswers: Answer[],
 }
 type Answer = {
   id: number,
-  title: String,
+  title: string,
+  previousQuestionId: number,
   nextQuestion?: Question,
   doc?: Doc
 }
@@ -51,16 +53,53 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onQuestionAdd(questionId: number, event: any): void {
-    const questions = this.treeForm.value['QUESTIONS'];
-    const index = questions.indexOf((q: any) => q.id == questionId);
+  onQuestionAdd(questionId: number): void {
+    const questions: any[] = this.treeForm.value['QUESTIONS'];
+    const index = questions.findIndex((q: any) => {
+      return q.id === questionId
+    });
     questions[index] = {
       ...questions[index],
-      title: event.target.value
+      title: this.questionForm.value['QUESTION_TITLE']
     }
     this.treeForm.controls['QUESTIONS'].setValue(
-      questions
+      [...questions]
     );
+  }
+
+  onAnswerAdd(questionId: number): void {
+    const answer: any[] = this.treeForm.value['ANSWERS'];
+
+    this.treeForm.controls['ANSWERS'].setValue(
+      [...answer,
+        {
+          id: answer.length + 1,
+          title: this.answerForm.value['ANSWER_LABEL'],
+          previousQuestionId: questionId,
+        }
+      ]
+    );
+    console.log(this.treeForm.value['ANSWERS']);
+  }
+
+  getSubmitedAnswer(questionId: number): any[] {
+    return this.treeForm.value['ANSWERS'].filter((a: any) => a.previousQuestionId === questionId);
+  }
+
+  onQuestionAddFromAnswer(answerId: number): void {
+    const questions = this.treeForm.value['QUESTIONS'];
+    this.treeForm.controls['QUESTIONS'].setValue(
+      [
+        ...questions,
+        {
+          id: questions.length + 1,
+          title: '',
+          previousAnswerId: answerId,
+
+        }
+      ]
+    );
+
   }
 
 
