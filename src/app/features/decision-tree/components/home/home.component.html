@@ -1,0 +1,44 @@
+<app-header></app-header>
+<div class="home-content">
+  <div id="home-first-content">
+    <span class="home-welcome-text">
+      <h1>Editeur de chatbot</h1>
+      <span>
+        <p>Configuration personnalisable d'arbre désionnel</p>
+        <button
+          [routerLink]="'/play/mode'"
+          class="home-button"
+          mat-raised-button
+          color="primary"
+        >
+          Configurer
+        </button>
+      </span>
+    </span>
+    <div class="card-content">
+      <img id="card_logo" src="../../../assets/scooter_gris.png" />
+    </div>
+  </div>
+</div>
+
+<div class="home-content">
+  <div id="home-first-content">
+    <div class="card-content">
+      <img id="card_logo" src="../../../assets/scooter_rouge.png" />
+    </div>
+    <span class="home-welcome-text">
+      <h1>Support Utilisateur</h1>
+      <span>
+        <p>Récupération des conversations par room</p>
+        <button
+          [routerLink]="'/play/mode'"
+          class="home-button"
+          mat-raised-button
+          color="primary"
+        >
+          Récupérer
+        </button>
+      </span>
+    </span>
+  </div>
+</div>
