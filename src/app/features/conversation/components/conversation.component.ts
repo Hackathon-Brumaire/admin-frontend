@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
-type Conversation = {
-  message: string;
-  type: "question" | "answer";
-}
+import {Component, OnInit} from '@angular/core';
+import {ConversationService} from "../../../services/conversation.service";
+import {ConversationHistory} from "../../../types/conversation-history";
 
 @Component({
   selector: 'app-conversation',
@@ -11,20 +8,18 @@ type Conversation = {
   styleUrls: ['./conversation.component.scss']
 })
 export class ConversationComponent implements OnInit {
-  conversation: Conversation[] = [
-    {
-      message: "Hello",
-      type:"question"
-    },
-    {
-      message: "Hello",
-      type:"answer"
-    }
-  ];
+  conversationHistory?: ConversationHistory;
+  roomId?: string;
 
-  constructor() { }
+  constructor(private conversationService: ConversationService) {
+  }
 
   ngOnInit(): void {
   }
 
+  getConversation() {
+    if (!this.roomId) return;
+    this.conversationService.getConversation(parseInt(this.roomId))
+      .then(conversation => this.conversationHistory = conversation)
+  }
 }

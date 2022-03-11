@@ -3,20 +3,23 @@
     <span>
       <mat-form-field>
         <mat-label>Username :</mat-label>
-        <input matInput
+        <input [(ngModel)]="roomId"
+               matInput
                type="text"/>
       </mat-form-field>
-      <button>Chercher</button>
+      <button (click)="getConversation()" mat-button type="button">Chercher</button>
     </span>
-    <div *ngFor="let message of conversation" class="message">
-      <div *ngIf="message.type === 'answer'" class="user-message">
-        <p>{{"username"}}</p>
-        <p>{{message.message}}</p>
+    <ng-container *ngIf="conversationHistory">
+      <div *ngFor="let message of conversationHistory.conversationHistorics" class="message">
+        <div *ngIf="message.messageType === 'answer'" class="user-message">
+          <p>Client</p>
+          <p>{{message.message}}</p>
+        </div>
+        <div *ngIf="message.messageType === 'question'" class="professional-message">
+          <p>Professionnel</p>
+          <p>{{message.message}}</p>
+        </div>
       </div>
-      <div *ngIf="message.type === 'question'" class="professional-message">
-        <p>Professionel</p>
-        <p>{{message.message}}</p>
-      </div>
-    </div>
+    </ng-container>
   </div>
 </main>

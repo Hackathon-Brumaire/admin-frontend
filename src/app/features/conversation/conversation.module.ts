@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {SharedModule} from "../../shared/shared.module";
 import {ConversationRoutingModule} from "./conversation-routing.module";
 import {ConversationComponent} from "./components/conversation.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import {ConversationComponent} from "./components/conversation.component";
   imports: [
     ConversationRoutingModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class ConversationModule {
