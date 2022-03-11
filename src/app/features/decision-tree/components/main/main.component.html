@@ -1,5 +1,6 @@
-<main data-scroll-container class="mx-auto px-2">
-  <mat-card>
+<app-header></app-header>
+<div class="home-content">
+  <mat-card class="card">
     <mat-card-header>
       <mat-card-title>
         Ajouter un arbre de décision
@@ -67,7 +68,11 @@
                      type="text"
               />
             </mat-form-field>
-            <button mat-raised-button color="primary" type="button" (click)="onAnswerAdd(question.id)">Ajouter</button>
+            <button mat-raised-button color="primary"
+                    (click)="onAnswerAdd(question.id)">
+              <mat-icon>add_circle</mat-icon>
+              Ajouter la réponse
+            </button>
           </form>
           <div *ngFor="let submittedAnswer of getSubmittedAnswer(question.id)" style="margin-top:20px">
             <div>
@@ -83,9 +88,10 @@
               <br>
               <div>Lien : {{submittedAnswer.doc.link}}</div>
             </div>
-            <button mat-raised-button color="primary" type="button"
+            <button mat-raised-button color="primary"
                     (click)="onQuestionAddFromAnswer(submittedAnswer.id)">
-              Ajouter une question
+              <mat-icon>add_box</mat-icon>
+              Associer une question
             </button>
             <br><br>
           </div>
@@ -93,7 +99,9 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="button" (click)="onSubmit()">Soumettre</button>
+      <button mat-raised-button class="submit-button" type="button" (click)="onSubmit()">
+        <mat-icon>check_circle</mat-icon> Soumettre
+      </button>
     </mat-card-actions>
   </mat-card>
-</main>
+</div>
