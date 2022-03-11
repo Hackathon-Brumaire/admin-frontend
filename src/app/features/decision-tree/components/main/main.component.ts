@@ -59,7 +59,7 @@ export class MainComponent implements OnInit {
       title: this.answerForm.value['ANSWER_TITLE'],
       previousQuestionId: questionId,
     }
-    if (this.answerForm.value['ANSWER_DOC_LABEL'] == null ||
+    if (this.answerForm.value['ANSWER_DOC_LABEL'] != null &&
       this.answerForm.value['ANSWER_DOC_LABEL'].length > 0) {
       nextAnswer.doc = {
         label: this.answerForm.value['ANSWER_DOC_LABEL'],
