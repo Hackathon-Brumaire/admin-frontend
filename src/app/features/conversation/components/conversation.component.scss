@@ -1,5 +1,5 @@
 main {
-  min-height: 100vh;
+  padding: 10px;
   color: #000;
   display: flex;
   justify-content: space-between;
@@ -8,20 +8,10 @@ main {
 
   .message {
     margin-bottom: 20px;
-    color: black;
-    background-color: white;
   }
 
   button {
-    background-color: red;
-  }
-
-  .form {
-    background-color: gray;
-    border-radius: 10px;
-    padding: 25px;
-    &:first-child {
-      margin-right: 10px;
-    }
+    background-color: #f73c3b;
+    margin-left: 15px;
   }
 }

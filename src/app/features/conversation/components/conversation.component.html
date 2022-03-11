@@ -1,13 +1,13 @@
 <main class="mx-auto px-2">
   <div>
-    <span class="form">
+    <div class="form">
       <mat-form-field appearance="outline" color="primary">
         <mat-label>Numero de la salle</mat-label>
         <input [(ngModel)]="roomId"
                matInput type="text"/>
       </mat-form-field>
       <button (click)="getConversation()" color="primary" mat-raised-button type="submit">Chercher</button>
-    </span>
+    </div>
     <ng-container *ngIf="conversationHistory">
       <div *ngFor="let message of conversationHistory.conversationHistorics" class="message">
         <mat-card class="message">
