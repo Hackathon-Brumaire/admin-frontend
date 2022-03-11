@@ -13,6 +13,9 @@ import { HeaderComponent } from './components/header/header.component';
     HomeComponent,
     HeaderComponent
   ],
+  exports: [
+    HeaderComponent
+  ],
   imports: [
     DecisionTreeRoutingModule,
     CommonModule,
