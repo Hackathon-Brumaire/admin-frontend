@@ -1,0 +1,35 @@
+.label-file {
+    cursor: pointer;
+    color: #f73c3b;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+h2 {
+    font-family: "Chewy", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+.label-file:hover {
+    color: #f73c3b;
+}
+
+// et on masque le input
+.input-file {
+    display: none;
+}
+
+#container {
+    font-family: "Chewy", Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10rem;
+}
+
+.container-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
