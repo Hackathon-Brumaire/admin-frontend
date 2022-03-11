@@ -21,5 +21,6 @@ export class ConversationComponent implements OnInit {
     if (!this.roomId) return;
     this.conversationService.getConversation(parseInt(this.roomId))
       .then(conversation => this.conversationHistory = conversation)
+      .catch();
   }
 }
