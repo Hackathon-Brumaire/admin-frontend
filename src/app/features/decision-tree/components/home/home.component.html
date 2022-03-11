@@ -6,7 +6,7 @@
       <span>
         <p>Configuration personnalisable d'arbre décisionnel</p>
         <button
-          [routerLink]="'/play/mode'"
+          (click)="router.navigate(['/chatbot'])"
           class="home-button"
           mat-raised-button
           color="primary"
@@ -31,7 +31,7 @@
       <span>
         <p>Récupération des conversations par room</p>
         <button
-          [routerLink]="'/play/mode'"
+          (click)="router.navigate(['/conversation'])"
           class="home-button"
           mat-raised-button
           color="primary"
